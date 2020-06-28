@@ -1,14 +1,7 @@
-/// <reference path="@types/vue-api-query.d.ts" />
-
 import { Model, ThisClass } from "vue-api-query";
 import { CategoryListItem } from "./@types/category";
 import { OCFileData, Result } from "./@types/base";
-import {
-  UserRegisterOptions,
-  VendorData,
-  UserModel,
-  UserData,
-} from "./@types/user";
+import { UserRegisterOptions, VendorData, UserData } from "./@types/user";
 import { ResponseLogin } from "./@types/api";
 import { UserAddressType, UserAddressData } from "./@types/user-address";
 

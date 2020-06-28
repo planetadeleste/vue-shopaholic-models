@@ -56,5 +56,6 @@
     "dist",
     "src"
   ],
-  "main": "./dist/vue-shopaholic-models.umd.js"
+  "main": "./dist/vue-shopaholic-models.umd.js",
+  "typings": "src/vue-shopaholic-models.d.ts"
 }
