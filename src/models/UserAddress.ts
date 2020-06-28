@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import BaseApiModel from "./BaseApiModel";
 import { UserAddressType } from '@/@types/user-address';
 import { Result } from '@/@types/base';

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Product from "./Product";
 
 export default class Event extends Product {

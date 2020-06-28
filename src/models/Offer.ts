@@ -1,3 +1,4 @@
+// @ts-nocheck
 import BaseApiModel from "./BaseApiModel";
 import { OCFileData } from '@/@types/base';
 

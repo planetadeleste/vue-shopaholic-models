@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import BaseApiModel from "./BaseApiModel";
 import Vue from "vue";
 import UserAddress from "./UserAddress";

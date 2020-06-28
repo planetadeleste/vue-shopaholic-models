@@ -1,3 +1,6 @@
+// @ts-nocheck
+
+/// <reference path="../@types/vue-api-query.d.ts" />
 import { Model as BaseModel, ThisClass } from "vue-api-query";
 import { AxiosRequestConfig } from "axios";
 import { VuexModule } from "vuex-module-decorators";
@@ -117,6 +120,7 @@ export default class Model extends BaseModel {
   }
 
   static list() {
+    // @ts-ignore
     return this.instance().list();
   }
 
@@ -131,7 +135,7 @@ export default class Model extends BaseModel {
     return data instanceof this ? data : new this(data);
   }
 
-  async save() {
+  async save<T extends BaseModel>(): Promise<T | undefined> {
     try {
       // @ts-ignore
       return await super.save().then((model: Model) => {
@@ -142,7 +146,7 @@ export default class Model extends BaseModel {
     }
   }
 
-  async find(id: number) {
+  async find<T extends BaseModel>(id: number): Promise<T | undefined> {
     try {
       // @ts-ignore
       return await super.find(id).then((response: ApiListResponse) => {
@@ -154,7 +158,7 @@ export default class Model extends BaseModel {
     }
   }
 
-  async first() {
+  async first<T extends BaseModel>(): Promise<T | undefined> {
     try {
       // @ts-ignore
       return await super.first().then((response: ApiListResponse) => {
@@ -166,7 +170,7 @@ export default class Model extends BaseModel {
     }
   }
 
-  async get() {
+  async get<T extends BaseModel>(): Promise<T | undefined> {
     try {
       // @ts-ignore
       return await super.get().then((response: ApiIndexResponse) => {

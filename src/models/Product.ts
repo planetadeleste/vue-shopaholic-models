@@ -1,3 +1,4 @@
+// @ts-nocheck
 import BaseApiModel from "./BaseApiModel";
 import CategoryModel from "./Category";
 import Offer from "./Offer";
