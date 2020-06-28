@@ -1,11 +1,12 @@
 import BaseApiModel from "./BaseApiModel";
 import CategoryModel from "./Category";
 import Offer from "./Offer";
+import { OCFileData } from '@/@types/base';
 
 export default class Product extends BaseApiModel {
   id!: number;
   category!: CategoryModel;
-  images!: import("../@types/base").IFileData[];
+  images!: OCFileData[];
   slug!: string;
   category_id!: number;
   category_name!: string;

@@ -1,2 +1,1 @@
-import Model from "./models/BaseApiModel";
-export { Model };
+export * from "./models/BaseApiModel";

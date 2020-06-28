@@ -1,6 +1,6 @@
 {
   "name": "vue-shopaholic-models",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Vue models for OctoberCMS Lovata.Shopaholic plugin",
   "author": {
     "name": "Alvaro Canepa",
@@ -19,8 +19,16 @@
     "url": "https://github.com/planetadeleste/vue-shopaholic-models.git"
   },
   "private": false,
+  "scripts": {
+    "build": "vue-cli-service build --target lib ./src/index.ts",
+    "lint": "vue-cli-service lint"
+  },
   "dependencies": {
+    "vue": "^2.6.11",
     "lodash": "^4.17.15",
+    "vue-property-decorator": "^8.4.2",
+    "vue-class-component": "^7.2.3",
+    "object-to-formdata": "^3.0.9",
     "vue-api-query": "^1.5.2"
   },
   "devDependencies": {
@@ -34,10 +42,6 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^5.0.2",
     "axios": "^0.19.2",
-    "vue-class-component": "^7.2.3",
-    "vue-property-decorator": "^8.4.2",
-    "vue": "^2.6.11",
-    "object-to-formdata": "^3.0.9",
     "core-js": "^3.6.5",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.3",
@@ -47,5 +51,10 @@
     "vue-template-compiler": "^2.6.11",
     "vuex": "^3.4.0",
     "vuex-module-decorators": "^0.17.0"
-  }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "./dist/vue-shopaholic-models.umd.js"
 }
