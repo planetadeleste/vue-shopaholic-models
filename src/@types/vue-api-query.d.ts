@@ -1,9 +1,4 @@
-/// <reference path="./vue-api-query/Parser.d.ts" />
-/// <reference path="./vue-api-query/Builder.d.ts" />
-
 declare module "vue-api-query" {
-  import { LooseObject } from "@/@types/base";
-  import { Builder } from "@/@types/vue-api-query/Builder";
   import { AxiosInstance, AxiosRequestConfig, AxiosPromise } from "axios";
 
   type ThisClass<InstanceType extends Model> = {
@@ -15,7 +10,12 @@ declare module "vue-api-query" {
     super(...args: any[]): T;
   }
 
-  export class Model {
+  export class StaticModel {
+    static instance<T extends StaticModel>(this: T): T;
+    static include<T extends StaticModel>(...args: any[]): T;
+  }
+
+  export class Model extends StaticModel {
     constructor(...args: any[]);
     super: Constructor<this>;
 
@@ -86,8 +86,8 @@ declare module "vue-api-query" {
     static find<T extends Model>(this: ThisClass<T>, id: number | string): T;
     static first<T extends Model>(this: ThisClass<T>): T;
     static get(): any;
-    static include(...args: any[]): Model;
-    static instance<T extends Model>(this: ThisClass<T>): T;
+    // static include(...args: any[]): Model;
+    // static instance<T extends Model>(this: ThisClass<T>): T;
     static limit<T extends Model>(this: ThisClass<T>, value: any): T;
     static orderBy(...args: any[]): Model;
     static page(value: any): Model;
@@ -95,5 +95,211 @@ declare module "vue-api-query" {
     static select(...args: any[]): Model;
     static where(field: string, value: any): Model;
     static whereIn(field: string, array: any[]): Model;
+  }
+
+  export class Builder {
+    /**
+     *
+     * @param model
+     */
+    constructor(model: any): Builder;
+
+    /**
+     * query string parsed
+     */
+    query(): void;
+
+    /**
+     * Query builder
+     * @param ...args
+     * @return
+     */
+    include(...args: any): /* Builder.prototype.+Builder */ any;
+
+    /**
+     *
+     * @param ...args
+     * @return
+     */
+    append(...args: any): /* !this */ any;
+
+    /**
+     *
+     * @param ...fields
+     * @return
+     */
+    select(...fields: any): /* !this */ any;
+
+    /**
+     *
+     * @param key
+     * @param value
+     * @return
+     */
+    where(key: any, value: any): /* !this */ any;
+
+    /**
+     *
+     * @param key
+     * @param array
+     * @return
+     */
+    whereIn(key: any, array: any): /* !this */ any;
+
+    /**
+     *
+     * @param ...args
+     * @return
+     */
+    orderBy(...args: any): /* !this */ any;
+
+    /**
+     *
+     * @param value
+     * @return
+     */
+    page(value: any): /* !this */ any;
+
+    /**
+     *
+     * @param value
+     * @return
+     */
+    limit(value: any): /* !this */ any;
+
+    /**
+     *
+     * @param payload
+     * @return
+     */
+    params(payload: any): /* !this */ any;
+
+    includes: any[];
+    appends: any[];
+    sorts: any[];
+    fields: object;
+    filters: object;
+    model: any;
+    pageValue: null | number;
+    limitValue: null | number;
+    payload: any;
+    parser: Parser;
+  }
+
+  export class Parser {
+    /**
+     *
+     * @param builder
+     */
+    constructor(builder: any);
+
+    /**
+     * final query string
+     * @return
+     */
+    query(): /* !this.uri */ any;
+
+    /**
+     * Helpers
+     * @return
+     */
+    hasIncludes(): boolean;
+
+    /**
+     *
+     * @return
+     */
+    hasAppends(): boolean;
+
+    /**
+     *
+     * @return
+     */
+    hasFields(): boolean;
+
+    /**
+     *
+     * @return
+     */
+    hasFilters(): boolean;
+
+    /**
+     *
+     * @return
+     */
+    hasSorts(): boolean;
+
+    /**
+     *
+     * @return
+     */
+    hasPage(): boolean;
+
+    /**
+     *
+     * @return
+     */
+    hasLimit(): boolean;
+
+    /**
+     *
+     * @return
+     */
+    hasPayload(): boolean;
+
+    /**
+     *
+     * @return
+     */
+    prepend(): string;
+
+    /**
+     *
+     */
+    parameterNames(): void;
+
+    /**
+     * Parsers
+     */
+    includes(): void;
+
+    /**
+     *
+     */
+    appends(): void;
+
+    /**
+     *
+     */
+    fields(): void;
+
+    /**
+     *
+     */
+    filters(): void;
+
+    /**
+     *
+     */
+    sorts(): void;
+
+    /**
+     *
+     */
+    page(): void;
+
+    /**
+     *
+     */
+    limit(): void;
+
+    /**
+     *
+     */
+    payload(): void;
+  }
+
+  interface LooseObject {
+    [key: string]: any;
   }
 }

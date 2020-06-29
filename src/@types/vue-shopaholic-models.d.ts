@@ -1,9 +1,9 @@
 import { Model, ThisClass } from "vue-api-query";
-import { CategoryListItem } from "./@types/category";
-import { OCFileData, Result } from "./@types/base";
-import { UserRegisterOptions, VendorData, UserData } from "./@types/user";
-import { ResponseLogin } from "./@types/api";
-import { UserAddressType, UserAddressData } from "./@types/user-address";
+import { CategoryListItem, CategoryModel } from "./category";
+import { OCFileData, Result } from "./base";
+import { UserRegisterOptions, VendorData, UserData } from "./user";
+import { ResponseLogin } from "./api";
+import { UserAddressType, UserAddressData } from "./user-address";
 
 import { VuexModule } from "vuex-module-decorators";
 
@@ -47,7 +47,7 @@ declare module "vue-shopaholic-models" {
     byActive<T extends BaseApiModel>(): T;
     byTree<T extends BaseApiModel>(): T;
 
-    static tree(): Promise<any>;
+    static tree(): Promise<CategoryModel[]>;
   }
 
   export class Product extends BaseApiModel {
