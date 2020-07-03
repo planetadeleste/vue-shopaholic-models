@@ -1,6 +1,6 @@
 import BaseApiModel from "./BaseApiModel";
-import { CategoryListItem } from "@/@types/category";
-import { OCFileData } from "@/@types/base";
+import { CategoryListItem } from "../@types/category";
+import { OCFileData } from "../@types/base";
 
 export default class Category extends BaseApiModel {
   id?: number;
@@ -41,10 +41,10 @@ export default class Category extends BaseApiModel {
   }
 
   byEvents() {
-    return this.filterBy({ is_event: 1 });
+    return this.filterBy({ isEvent: 1 });
   }
 
   byProducts() {
-    return this.filterBy({ is_not_event: 1 });
+    return this.filterBy({ isNotEvent: 1 });
   }
 }

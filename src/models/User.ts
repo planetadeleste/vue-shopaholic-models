@@ -3,8 +3,8 @@
 import BaseApiModel from "./BaseApiModel";
 import Vue from "vue";
 import UserAddress from "./UserAddress";
-import { UserRegisterOptions, VendorData, UserModel } from "@/@types/user";
-import { ResponseLogin } from "@/@types/api";
+import { UserRegisterOptions, VendorData, UserModel } from "../@types/user";
+import { ResponseLogin } from "../@types/api";
 import _ from "lodash";
 
 export default class User extends BaseApiModel implements UserModel {
@@ -34,7 +34,7 @@ export default class User extends BaseApiModel implements UserModel {
     return { address: UserAddress };
   }
 
-  get full_name() {
+  get fullName() {
     return _.chain([this.name, this.middle_name, this.last_name])
       .compact()
       .join(" ")

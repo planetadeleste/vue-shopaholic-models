@@ -1,6 +1,6 @@
 // @ts-nocheck
 import BaseApiModel from "./BaseApiModel";
-import { OCFileData } from "@/@types/base";
+import { OCFileData } from "../@types/base";
 
 export default class Offer extends BaseApiModel {
   id!: number;

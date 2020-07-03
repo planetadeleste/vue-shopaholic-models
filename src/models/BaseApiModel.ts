@@ -2,7 +2,7 @@ import { Model as BaseModel, Constructor, ThisClass } from "vue-api-query";
 import { AxiosRequestConfig } from "axios";
 import { VuexModule } from "vuex-module-decorators";
 import { objectToFormData } from "object-to-formdata";
-import { ApiListResponse, ApiIndexResponse } from "@/@types/api";
+import { ApiListResponse, ApiIndexResponse } from "../@types/api";
 import _ from "lodash";
 
 // @ts-ignore

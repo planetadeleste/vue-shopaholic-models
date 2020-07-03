@@ -1,8 +1,8 @@
 // @ts-nocheck
 
 import BaseApiModel from "./BaseApiModel";
-import { UserAddressType } from "@/@types/user-address";
-import { Result } from "@/@types/base";
+import { UserAddressType } from "../@types/user-address";
+import { Result } from "../@types/base";
 import _ from "lodash";
 
 export default class UserAddress extends BaseApiModel {
