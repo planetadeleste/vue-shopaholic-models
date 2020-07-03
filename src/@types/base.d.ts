@@ -33,7 +33,6 @@ export interface BaseModelData extends BaseListData, BaseData {
   updated_at?: string;
 }
 
-
 /**
  * Base Item
  * @class \Lovata\Toolbox\Classes\Item\ElementItem

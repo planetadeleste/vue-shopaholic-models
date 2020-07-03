@@ -44,8 +44,8 @@ declare module "vue-shopaholic-models" {
     external_id?: string;
     children?: CategoryListItem[];
 
-    byActive<T extends BaseApiModel>(): T;
-    byTree<T extends BaseApiModel>(): T;
+    byActive<T extends Category>(): T;
+    byTree<T extends Category>(): T;
 
     static tree(): Promise<CategoryModel[]>;
   }

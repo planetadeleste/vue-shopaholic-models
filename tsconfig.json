@@ -3,6 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "strict": true,
+    "composite": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
@@ -13,12 +14,9 @@
     "declarationMap": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "rootDir": ".",
     "types": ["webpack-env"],
-    "typeRoots": [
-      "src/@types",
-      "node_modules/@types",
-      "node_modules/vuetify/types"
-    ],
+    "typeRoots": ["src/@types", "node_modules/@types"],
     "paths": {
       "@/*": ["src/*"]
     },

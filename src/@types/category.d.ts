@@ -11,6 +11,4 @@ export interface CategoryListItem extends ElementItem {
 /**
  * Category model
  */
-export interface CategoryModel
-  extends CategoryListItem,
-    BaseModel {}
+export interface CategoryModel extends CategoryListItem, BaseModel {}

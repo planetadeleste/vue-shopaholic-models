@@ -10,9 +10,29 @@ declare module "vue-api-query" {
     super(...args: any[]): T;
   }
 
-  export class StaticModel {
-    static instance<T extends StaticModel>(this: T): T;
+  abstract class StaticModel {
+    static instance<T extends StaticModel>(this: T, data?: object | T): T;
     static include<T extends StaticModel>(...args: any[]): T;
+
+    static $find(id: number | string): any;
+    static $first(): any;
+    static $get(): any;
+
+    static append<T extends StaticModel>(...args: any[]): T;
+    static custom<T extends StaticModel>(this: T, ...args: any[]): T;
+    static find<T extends StaticModel>(
+      this: T,
+      id: number | string
+    ): Promise<T | undefined>;
+    static first<T extends StaticModel>(this: T): T;
+    static get(): any;
+    static limit<T extends StaticModel>(this: T, value: any): T;
+    static orderBy<T extends StaticModel>(...args: any[]): T;
+    static page<T extends StaticModel>(value: any): T;
+    static params<T extends Model>(this: T, payload: LooseObject): T;
+    static select<T extends StaticModel>(...args: any[]): T;
+    static where<T extends StaticModel>(field: string, value: any): T;
+    static whereIn<T extends StaticModel>(field: string, array: any[]): T;
   }
 
   export class Model extends StaticModel {
@@ -45,9 +65,9 @@ declare module "vue-api-query" {
     orderBy(...args: any[]): this;
     where(field: string, value: any): this;
     whereIn(field: string, array: any[]): this;
-    limit<T extends Model>(this: ThisClass<T>, value: number): T;
+    limit<T extends Model>(this: T, value: number): T;
     page(value: number): this;
-    params<T extends Model>(this: ThisClass<T>, payload: LooseObject): T;
+    params<T extends Model>(this: T, payload: LooseObject): T;
     for(...args: any[]): this;
     hasMany<T>(model: T): T;
 
@@ -59,14 +79,15 @@ declare module "vue-api-query" {
     $find(identifier: number | string): any;
     $first(): any;
     $get(): any;
+
     find<T extends Model>(
-      this: ThisClass<T>,
+      this: T,
       identifier: number | string
     ): Promise<T | undefined>;
-    first<T extends Model>(this: ThisClass<T>): Promise<T | undefined>;
-    get<T extends Model>(this: ThisClass<T>): Promise<T[] | undefined>;
+    first<T extends Model>(this: T): Promise<T | undefined>;
+    get<T extends Model>(this: T): Promise<T[] | any | undefined>;
     delete(): Promise<any>;
-    save<T extends Model>(this: ThisClass<T>): Promise<T | undefined>;
+    save<T extends Model>(this: T): Promise<T | undefined>;
     attach(params: object): Promise<any>;
     sync(params: object): Promise<any>;
 
@@ -77,24 +98,6 @@ declare module "vue-api-query" {
     isValidId(id: any): boolean;
 
     parameterNames(): any;
-
-    static $find(id: number | string): any;
-    static $first(): any;
-    static $get(): any;
-    static append(...args: any[]): Model;
-    static custom<T extends Model>(this: ThisClass<T>, ...args: any[]): T;
-    static find<T extends Model>(this: ThisClass<T>, id: number | string): T;
-    static first<T extends Model>(this: ThisClass<T>): T;
-    static get(): any;
-    // static include(...args: any[]): Model;
-    // static instance<T extends Model>(this: ThisClass<T>): T;
-    static limit<T extends Model>(this: ThisClass<T>, value: any): T;
-    static orderBy(...args: any[]): Model;
-    static page(value: any): Model;
-    static params<T extends Model>(this: ThisClass<T>, payload: LooseObject): T;
-    static select(...args: any[]): Model;
-    static where(field: string, value: any): Model;
-    static whereIn(field: string, array: any[]): Model;
   }
 
   export class Builder {
@@ -102,7 +105,7 @@ declare module "vue-api-query" {
      *
      * @param model
      */
-    constructor(model: any): Builder;
+    constructor(model: any);
 
     /**
      * query string parsed

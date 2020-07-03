@@ -1,15 +1,13 @@
-// @ts-nocheck
-
-/// <reference path="../@types/vue-api-query.d.ts" />
-import { Model as BaseModel, ThisClass } from "vue-api-query";
+import { Model as BaseModel, Constructor, ThisClass } from "vue-api-query";
 import { AxiosRequestConfig } from "axios";
 import { VuexModule } from "vuex-module-decorators";
 import { objectToFormData } from "object-to-formdata";
 import { ApiListResponse, ApiIndexResponse } from "@/@types/api";
 import _ from "lodash";
 
+// @ts-ignore
 export default class Model extends BaseModel {
-  ["constructor"]!: typeof BaseModel;
+  // ["constructor"]!: typeof BaseModel;
 
   baseURL() {
     return "";
@@ -73,7 +71,7 @@ export default class Model extends BaseModel {
   /**
    * Show global loading
    */
-  showLoading() {
+  showLoading<T extends Model>(this: T): T {
     this.hideLoading = false;
 
     return this;
@@ -90,7 +88,7 @@ export default class Model extends BaseModel {
   /**
    * Like hasMany, but without primary key
    */
-  hasManyWithoutKey<T extends BaseModel>(model: ThisClass<T>): T {
+  hasManyWithoutKey<T extends Model>(model: Constructor<T>): T {
     const instance = new model();
     const url = `${this.baseURL()}/${this.resource()}/${instance.resource()}`;
 
@@ -102,12 +100,12 @@ export default class Model extends BaseModel {
   /**
    * Reload model data
    */
-  async reload() {
+  async reload<T extends Model>(this: T): Promise<T> {
     if (!this.hasId()) {
       throw new Error("You must specify the identified param.");
     }
 
-    const response = this.constructor.$find(this.getPrimaryKey());
+    const response = this.$find(this.getPrimaryKey());
     if (response.id) {
       _.assignIn(this, response);
     }
@@ -115,19 +113,15 @@ export default class Model extends BaseModel {
     return this;
   }
 
-  list(): this {
+  list<T extends Model>(this: T): T {
     return this.custom(`${this.resource()}/list`);
   }
 
   static list() {
-    // @ts-ignore
     return this.instance().list();
   }
 
-  static instance<T extends BaseModel>(
-    this: ThisClass<T>,
-    data?: object | Model
-  ): T {
+  static instance<T extends Model>(this: ThisClass<T>, data?: object | T): T {
     if (_.isUndefined(data)) {
       return new this();
     }
@@ -138,15 +132,16 @@ export default class Model extends BaseModel {
   async save<T extends BaseModel>(): Promise<T | undefined> {
     try {
       // @ts-ignore
-      return await super.save().then((model: Model) => {
+      return await super.save().then((model: Model<T>) => {
         return this.applyMutations(model);
       });
     } catch (error) {
       this.catchError(error);
     }
+    return undefined;
   }
 
-  async find<T extends BaseModel>(id: number): Promise<T | undefined> {
+  async find<T extends BaseModel>(id: number | string): Promise<T | undefined> {
     try {
       // @ts-ignore
       return await super.find(id).then((response: ApiListResponse) => {
@@ -170,7 +165,7 @@ export default class Model extends BaseModel {
     }
   }
 
-  async get<T extends BaseModel>(): Promise<T | undefined> {
+  async get<T extends BaseModel>(): Promise<T[] | any | undefined> {
     try {
       // @ts-ignore
       return await super.get().then((response: ApiIndexResponse) => {
@@ -190,7 +185,7 @@ export default class Model extends BaseModel {
     }
   }
 
-  filterBy(filters: object) {
+  filterBy<T extends Model>(this: T, filters: object): T {
     if (_.isEmpty(filters) || !_.isPlainObject(filters)) {
       return this;
     }
@@ -224,7 +219,7 @@ export default class Model extends BaseModel {
     });
   }
 
-  private applyMutations(model: Model): Model {
+  private applyMutations<T extends Model>(model: T): T {
     if (_.isPlainObject(model)) {
       // @ts-ignore
       model = new this.constructor(model);
