@@ -3,7 +3,7 @@ import BaseApiModel from "./BaseApiModel";
 import { OCFileData } from "../@types/base";
 
 export default class Offer extends BaseApiModel {
-  id!: number;
+  id!: number | string;
   name!: string;
   code!: string;
   price!: string;

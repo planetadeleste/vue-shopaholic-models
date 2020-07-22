@@ -11,6 +11,7 @@ export interface OfferItem extends ElementItem {
   created_at: string;
   updated_at: string;
   thumbnail: string;
+  code: string;
 }
 
 export interface OfferModel extends OfferItem {
