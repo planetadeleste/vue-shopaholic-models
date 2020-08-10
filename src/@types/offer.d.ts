@@ -1,4 +1,4 @@
-import { ElementItem, OCFileData } from "./base";
+import { ElementItem, OCFileData } from "@bit/planetadeleste.shopaholic.types.base";
 
 export interface OfferItem extends ElementItem {
   price: string;

@@ -2,7 +2,8 @@ import { Model as BaseModel, Constructor, ThisClass } from "vue-api-query";
 import { AxiosRequestConfig } from "axios";
 import { VuexModule } from "vuex-module-decorators";
 import { objectToFormData } from "object-to-formdata";
-import { ApiListResponse, ApiIndexResponse } from "../@types/api";
+import { ApiListResponse, ApiIndexResponse } from "@bit/planetadeleste.shopaholic.types.api";
+import { Result } from '@bit/planetadeleste.shopaholic.types.base';
 import _ from "lodash";
 
 // @ts-ignore
@@ -51,7 +52,9 @@ export default class Model extends BaseModel {
     if (!this.hideLoading && this.loadingModule) {
       _.invoke(this.loadingModule, "loading");
     }
-    const response = this.$http.request(config);
+    
+    const response = await this.$http.request(config);
+
     if (this.loadingModule) {
       _.invoke(this.loadingModule, "loaded");
     }
@@ -129,11 +132,14 @@ export default class Model extends BaseModel {
     return data instanceof this ? data : new this(data);
   }
 
-  async save<T extends BaseModel>(): Promise<T | undefined> {
+  async save(): Promise<Result | undefined> {
     try {
       // @ts-ignore
-      return await super.save().then((model: Model<T>) => {
-        return this.applyMutations(model);
+      return await super.save().then((response: Result) => {
+        const model = response.data;
+        this.applyMutations(model);
+        
+        return response;
       });
     } catch (error) {
       this.catchError(error);
@@ -207,6 +213,14 @@ export default class Model extends BaseModel {
     return this;
   }
 
+  orderBy<T extends BaseModel>(this: T, sColumn: string, sDirection: string = 'asc'): T {
+
+    const arSorts = this._builder.sorts;
+    arSorts.push(JSON.stringify({ column: sColumn, direction: sDirection }));
+
+    return this;
+  }
+
   toPlainObject() {
     return _.pickBy(this, item => {
       return (
@@ -256,6 +270,10 @@ export default class Model extends BaseModel {
   }
 
   private catchError(error: unknown) {
+    if (this.loadingModule) {
+      _.invoke(this.loadingModule, "loaded");
+    }
+    
     let message = this.syncErrors(error);
 
     if (!message || _.isEmpty(message) || !this.flashModule) {

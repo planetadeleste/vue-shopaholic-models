@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from "axios";
-import { UserModel } from "./user";
+import { UserModel } from "@bit/planetadeleste.shopaholic.types.user";
 
 /**
  * API response

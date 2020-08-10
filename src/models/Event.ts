@@ -1,5 +1,5 @@
 // @ts-nocheck
-import Product from "./Product";
+import Product from "@bit/planetadeleste.shopaholic.models.product";
 
 export default class Event extends Product {
   resource() {

@@ -1,6 +1,6 @@
-import { ElementItem, BaseModel, OCFileData } from "./base";
-import { OfferModel } from "./offer";
-import { CategoryListItem } from "./category";
+import { ElementItem, BaseModel, OCFileData } from "@bit/planetadeleste.shopaholic.types.base";
+import { OfferModel } from "@bit/planetadeleste.shopaholic.types.offer";
+import { CategoryListItem } from "@bit/planetadeleste.shopaholic.types.category";
 
 /**
  * Product list item

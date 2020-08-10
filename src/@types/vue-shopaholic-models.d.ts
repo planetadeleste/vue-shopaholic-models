@@ -1,13 +1,13 @@
-import { Model, ThisClass } from "vue-api-query";
-import { CategoryListItem, CategoryModel } from "./category";
-import { OCFileData, Result } from "./base";
-import { UserRegisterOptions, VendorData, UserData } from "./user";
-import { ResponseLogin } from "./api";
-import { UserAddressType, UserAddressData } from "./user-address";
-
-import { VuexModule } from "vuex-module-decorators";
-
 declare module "vue-shopaholic-models" {
+
+  import { Model, ThisClass } from "vue-api-query";
+  import { CategoryListItem, CategoryModel } from "@bit/planetadeleste.shopaholic.types.category";
+  import { OCFileData, Result } from "@bit/planetadeleste.shopaholic.types.base";
+  import { UserRegisterOptions, VendorData, UserData } from "@bit/planetadeleste.shopaholic.types.user";
+  import { ResponseLogin } from "@bit/planetadeleste.shopaholic.types.api";
+  import { UserAddressType, UserAddressData } from "@bit/planetadeleste.shopaholic.types.user-address";
+  import { VuexModule } from "vuex-module-decorators";
+
   export class BaseApiModel extends Model {
     static $flashModule?: VuexModule;
     static $loadingModule?: VuexModule;

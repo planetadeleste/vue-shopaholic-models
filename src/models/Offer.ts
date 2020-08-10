@@ -1,6 +1,6 @@
 // @ts-nocheck
-import BaseApiModel from "./BaseApiModel";
-import { OCFileData } from "../@types/base";
+import BaseApiModel from "@bit/planetadeleste.shopaholic.models.base-api-model";
+import { OCFileData } from "@bit/planetadeleste.shopaholic.types.base";
 
 export default class Offer extends BaseApiModel {
   id!: number | string;

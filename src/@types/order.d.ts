@@ -1,6 +1,6 @@
-import { UserData } from "./user";
-import { UserAddressData } from "./user-address";
-import { PaymentMethodItem } from "./payment";
+import { UserData } from "@bit/planetadeleste.shopaholic.types.user";
+import { UserAddressData } from "@bit/planetadeleste.shopaholic.types.user-address";
+import { PaymentMethodItem } from "@bit/planetadeleste.shopaholic.types.payment";
 
 export interface OrderData {
   id?: number;

@@ -1,7 +1,7 @@
-import BaseApiModel from "./BaseApiModel";
-import CategoryModel from "./Category";
-import Offer from "./Offer";
-import { OCFileData } from "../@types/base";
+import BaseApiModel from "@bit/planetadeleste.shopaholic.models.base-api-model";
+import CategoryModel from "@bit/planetadeleste.shopaholic.models.category";
+import Offer from "@bit/planetadeleste.shopaholic.models.offer";
+import { OCFileData } from "@bit/planetadeleste.shopaholic.types.base";
 
 export default class Product extends BaseApiModel {
   id!: number;

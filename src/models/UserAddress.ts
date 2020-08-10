@@ -1,8 +1,8 @@
 // @ts-nocheck
 
-import BaseApiModel from "./BaseApiModel";
-import { UserAddressType } from "../@types/user-address";
-import { Result } from "../@types/base";
+import BaseApiModel from "@bit/planetadeleste.shopaholic.models.base-api-model";
+import { UserAddressType } from "@bit/planetadeleste.shopaholic.types.user-address";
+import { Result } from "@bit/planetadeleste.shopaholic.types.base";
 import _ from "lodash";
 
 export default class UserAddress extends BaseApiModel {

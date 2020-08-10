@@ -1,6 +1,6 @@
-import { Result } from "./base";
-import { OfferModel } from "./offer";
-import { ProductItem } from "./product";
+import { Result } from "@bit/planetadeleste.shopaholic.types.base";
+import { OfferModel } from "@bit/planetadeleste.shopaholic.types.offer";
+import { ProductItem } from "@bit/planetadeleste.shopaholic.types.product";
 
 /**
  * CART

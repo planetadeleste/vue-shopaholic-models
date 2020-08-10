@@ -1,4 +1,5 @@
 declare module "vue-api-query" {
+  import { Result } from "@bit/planetadeleste.shopaholic.types.base";
   import { AxiosInstance, AxiosRequestConfig, AxiosPromise } from "axios";
 
   type ThisClass<InstanceType extends Model> = {
@@ -27,7 +28,7 @@ declare module "vue-api-query" {
     static first<T extends StaticModel>(this: T): T;
     static get(): any;
     static limit<T extends StaticModel>(this: T, value: any): T;
-    static orderBy<T extends StaticModel>(...args: any[]): T;
+    static orderBy<T extends StaticModel>(this: T, sColumn: string, sDirection?: string): T;
     static page<T extends StaticModel>(value: any): T;
     static params<T extends Model>(this: T, payload: LooseObject): T;
     static select<T extends StaticModel>(...args: any[]): T;
@@ -58,17 +59,17 @@ declare module "vue-api-query" {
     /**
      * Query
      */
-    append(...args: any[]): this;
-    custom(...args: any[]): this;
-    include(...args: any[]): this;
-    select(...args: any[]): this;
-    orderBy(...args: any[]): this;
-    where(field: string, value: any): this;
-    whereIn(field: string, array: any[]): this;
+    append<T extends Model>(this: T,...args: any[]): T;
+    custom<T extends Model>(this: T,...args: any[]): T;
+    include<T extends Model>(this: T,...args: any[]): T;
+    select<T extends Model>(this: T,...args: any[]): T;
+    orderBy<T extends Model>(this: T, sColumn: string, sDirection?: string): T;
+    where<T extends Model>(this: T, field: string, value: any): T;
+    whereIn<T extends Model>(this: T, field: string, array: any[]): T;
     limit<T extends Model>(this: T, value: number): T;
-    page(value: number): this;
+    page<T extends Model>(this: T, value: number): T;
     params<T extends Model>(this: T, payload: LooseObject): T;
-    for(...args: any[]): this;
+    for<T extends Model>(this: T,...args: any[]): T;
     hasMany<T>(model: T): T;
 
     // filterBy<T extends Model>(this: ThisClass<T>, filters: object): T;
@@ -86,8 +87,8 @@ declare module "vue-api-query" {
     ): Promise<T | undefined>;
     first<T extends Model>(this: T): Promise<T | undefined>;
     get<T extends Model>(this: T): Promise<T[] | any | undefined>;
-    delete(): Promise<any>;
-    save<T extends Model>(this: T): Promise<T | undefined>;
+    delete(): Promise<Result>;
+    save<T extends Model>(this: T): Promise<T | undefined | Result>;
     attach(params: object): Promise<any>;
     sync(params: object): Promise<any>;
 

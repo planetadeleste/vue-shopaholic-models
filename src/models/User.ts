@@ -1,10 +1,10 @@
 // @ts-nocheck
 
-import BaseApiModel from "./BaseApiModel";
+import BaseApiModel from "@bit/planetadeleste.shopaholic.models.base-api-model";
 import Vue from "vue";
-import UserAddress from "./UserAddress";
-import { UserRegisterOptions, VendorData, UserModel } from "../@types/user";
-import { ResponseLogin } from "../@types/api";
+import UserAddress from "@bit/planetadeleste.shopaholic.models.user-address";
+import { UserRegisterOptions, VendorData, UserModel } from "@bit/planetadeleste.shopaholic.types.user";
+import { ResponseLogin } from "@bit/planetadeleste.shopaholic.types.api";
 import _ from "lodash";
 
 export default class User extends BaseApiModel implements UserModel {
@@ -21,6 +21,7 @@ export default class User extends BaseApiModel implements UserModel {
   property?: any[] | undefined;
   address?: UserAddress[];
   vendor?: VendorData;
+  role?: string;
 
   resource() {
     return "profile";

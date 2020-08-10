@@ -60,7 +60,7 @@
   "typings": "src/vue-shopaholic-models.d.ts",
   "bit": {
     "env": {
-      "compiler": {
+      "noUsedCompiler": {
         "bit.envs/compilers/typescript@3.1.49": {
           "rawConfig": {
             "compiledFileTypes": [

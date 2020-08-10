@@ -1,11 +1,12 @@
-import { ElementItem, BaseModel } from "./base";
+import { ElementItem, BaseModel, OCFileData } from "@bit/planetadeleste.shopaholic.types.base";
 
 /**
  * Category List item
  */
 export interface CategoryListItem extends ElementItem {
   slug: string;
-  children: CategoryListItem[];
+  children?: CategoryListItem[];
+  images?: OCFileData[];
 }
 
 /**
