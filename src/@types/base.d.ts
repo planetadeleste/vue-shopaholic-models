@@ -38,10 +38,8 @@ export interface BaseModelData extends BaseListData, BaseData {
  * @class \Lovata\Toolbox\Classes\Item\ElementItem
  */
 export interface ElementItem extends BaseModelData {
-  preview_image: string;
-  preview_text: string;
-  created_at?: string;
-  updated_at?: string;
+  preview_image?: string;
+  preview_text?: string;
 }
 
 /**

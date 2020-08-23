@@ -24,7 +24,7 @@ export default class User extends BaseApiModel implements UserModel {
   role?: string;
 
   resource() {
-    return "profile";
+    return "users";
   }
 
   hidden() {
@@ -59,7 +59,7 @@ export default class User extends BaseApiModel implements UserModel {
     await this.instance().loadAvatar();
   }
 
-  async reload() {
+  async reload<T extends BaseApiModel>(this: T): Promise<T> {
     const response = await User.first();
     if (response) {
       _.assignIn(this, response);

@@ -36,14 +36,7 @@ export default class Model extends BaseModel {
       config.data._method = "PUT";
     }
 
-    const hasUpload = !_.chain(_.values(config.data))
-      .filter((value: unknown) => {
-        return value instanceof File;
-      })
-      .isEmpty()
-      .value();
-
-    if (hasUpload) {
+    if (this.hasFileUpload(config.data)) {
       config.data = objectToFormData(config.data, {
         indices: true
       });
@@ -60,6 +53,32 @@ export default class Model extends BaseModel {
     }
 
     return response;
+  }
+
+  /**
+   * Iterates over elements of data to find instaceof File
+   * 
+   * @param {Object} data
+   * @returns {Boolean}
+   */
+  private hasFileUpload(data: any): boolean {
+    let hasFile = false;
+
+    if (data instanceof File) {
+      return true;
+    }
+
+    if (_.isArray(data) || _.isObject(data)) {
+      _.forEach(data, (item: any) => {
+        if (this.hasFileUpload(item)) {
+          hasFile = true;
+        }
+      })
+    } else if (data instanceof File) {
+      hasFile = true;
+    }
+
+    return hasFile;
   }
 
   /**

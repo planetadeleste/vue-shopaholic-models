@@ -25,6 +25,7 @@ export interface UserItem extends UserData {
 
 export interface UserModel extends UserItem {
   groups: string[];
+  role?: string;
 }
 
 export type UserRegisterOptions = {
