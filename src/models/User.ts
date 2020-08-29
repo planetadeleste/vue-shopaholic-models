@@ -77,15 +77,14 @@ export default class User extends BaseApiModel implements UserModel {
         data: { email: login, password: password }
       }).then(response => response.data);
 
-      if (!response.status || !response) {
-        return response;
+      if (response.status) {
+        if (response.data.user) {
+          _.assignIn(this, response.data.user);
+        }
       }
+      
+      return response;
 
-      if (response.data.user) {
-        _.assignIn(this, response.data.user);
-      }
-
-      return _.pick(response.data, ["token", "expires_in"]);
     } catch (error) {
       return _.get(error, "response.data", error);
     }
@@ -126,20 +125,19 @@ export default class User extends BaseApiModel implements UserModel {
         data: params
       }).then(response => response.data);
 
-      if (!response.status || !response) {
-        return response;
+      if (response.status) {
+        if (response.data.user) {
+          _.assignIn(this, response.data.user);
+        }
       }
 
-      if (response.user) {
-        _.assignIn(this, response.user);
-      }
-      return _.pick(response, ["token", "expires_in"]);
+      return response;
     } catch (error) {
       return _.get(error, "response.data", error);
     }
   }
 
-  async update() {
+  async update(): Promise<Result> {
     try {
       const response = await this.request({
         method: "PUT",
