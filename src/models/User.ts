@@ -4,8 +4,8 @@ import BaseApiModel from "@bit/planetadeleste.shopaholic.models.base-api-model";
 import Vue from "vue";
 import UserAddress from "@bit/planetadeleste.shopaholic.models.user-address";
 import { UserRegisterOptions, VendorData, UserModel } from "@bit/planetadeleste.shopaholic.types.user";
-import { ResponseLogin } from "@bit/planetadeleste.shopaholic.types.api";
 import _ from "lodash";
+import { Result } from '@bit/planetadeleste.shopaholic.types.base';
 
 export default class User extends BaseApiModel implements UserModel {
   groups!: string[];
@@ -69,35 +69,35 @@ export default class User extends BaseApiModel implements UserModel {
     return this;
   }
 
-  async login(login: string, password: string): Promise<ResponseLogin> {
+  async login(login: string, password: string): Promise<Result> {
     try {
-      const response = await this.request({
+      const response: Result = await this.request({
         method: "POST",
         url: "auth/login",
         data: { email: login, password: password }
       }).then(response => response.data);
 
-      if (_.has(response, "error") || !response) {
+      if (!response.status || !response) {
         return response;
       }
 
-      if (response.user) {
-        _.assignIn(this, response.user);
+      if (response.data.user) {
+        _.assignIn(this, response.data.user);
       }
 
-      return _.pick(response, ["token", "expires_in"]);
+      return _.pick(response.data, ["token", "expires_in"]);
     } catch (error) {
       return _.get(error, "response.data", error);
     }
   }
 
-  async logout(): Promise<ResponseLogin | undefined> {
+  async logout(): Promise<Result | undefined> {
     try {
       if (!localStorage.getItem("access_token")) {
         return;
       }
 
-      const response = await this.request({
+      const response: Result = await this.request({
         method: "POST",
         url: "auth/invalidate",
         data: {
@@ -105,13 +105,11 @@ export default class User extends BaseApiModel implements UserModel {
         }
       }).then(response => response.data);
 
-      if (_.has(response, "error") || !response) {
-        return response;
-      }
-
-      localStorage.clear();
-      if (this.authModule) {
-        _.invoke(this.authModule, "logout");
+      if (response.status) {
+        localStorage.clear();
+        if (this.authModule) {
+          _.invoke(this.authModule, "logout");
+        }
       }
 
       return response;
@@ -120,15 +118,15 @@ export default class User extends BaseApiModel implements UserModel {
     }
   }
 
-  async register(params: UserRegisterOptions): Promise<ResponseLogin> {
+  async register(params: UserRegisterOptions): Promise<Result> {
     try {
-      const response = await this.request({
+      const response: Result = await this.request({
         method: "POST",
         url: "auth/register",
         data: params
       }).then(response => response.data);
 
-      if (_.has(response, "error") || !response) {
+      if (!response.status || !response) {
         return response;
       }
 
