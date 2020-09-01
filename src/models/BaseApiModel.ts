@@ -36,6 +36,8 @@ export default class Model extends BaseModel {
       config.data._method = "PUT";
     }
 
+    config.data = this.toPlainObject(config.data);
+
     if (this.hasFileUpload(config.data)) {
       config.data = objectToFormData(config.data, {
         indices: true
@@ -240,17 +242,42 @@ export default class Model extends BaseModel {
     return this;
   }
 
-  toPlainObject() {
-    return _.pickBy(this, item => {
-      return (
-        !item ||
-        _.isString(item) ||
-        _.isArray(item) ||
-        _.isNumber(item) ||
-        _.isPlainObject(item)
-      );
-    });
+  toPlainObject(obj: any = this): object{
+    if (_.isEmpty(obj)) {
+      return obj;
+    }
+
+    if (_.isArray(obj)) {
+      return _.map(obj, innerObj => this.toPlainObject(innerObj));
+    }
+
+    if (_.isPlainObject(obj)) {
+      return _.chain(obj)
+        .pickBy((item, key) => {
+          return !_.isFunction(item) && key !== "_builder";
+        })
+        .mapValues(val => this.toPlainObject(val))
+        .value();
+    }
+
+    if (_.isObject(obj)) {
+      return this.toPlainObject(_.toPlainObject(obj));
+    }
+
+    return obj;
   }
+  
+  // toPlainObject() {
+  //   return _.pickBy(this, item => {
+  //     return (
+  //       !item ||
+  //       _.isString(item) ||
+  //       _.isArray(item) ||
+  //       _.isNumber(item) ||
+  //       _.isPlainObject(item)
+  //     );
+  //   });
+  // }
 
   private applyMutations<T extends Model>(model: T): T {
     if (_.isPlainObject(model)) {
