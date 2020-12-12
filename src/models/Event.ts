@@ -1,6 +1,6 @@
 import BaseApiModel from "@bit/planetadeleste.shopaholic.models.base-api-model";
 import Product from "@bit/planetadeleste.shopaholic.models.product";
-import { ProductModel } from '@bit/planetadeleste.shopaholic.types.product';
+import { ProductModel } from "@bit/planetadeleste.shopaholic.types.product";
 
 export default class Event extends BaseApiModel {
   id!: number;
@@ -12,7 +12,7 @@ export default class Event extends BaseApiModel {
   days_before_open!: number;
   event_at!: string;
   product!: ProductModel;
-  
+
   resource() {
     return "events";
   }

@@ -16,7 +16,7 @@ export default class Town extends BaseApiModel {
 
   get mutations() {
     return {
-      state: State,
+      state: State
     };
   }
 }

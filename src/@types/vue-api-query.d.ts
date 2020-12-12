@@ -12,7 +12,10 @@ declare module "vue-api-query" {
   }
 
   abstract class StaticModel {
-    static instance<T extends StaticModel>(this: T, data?: object | T): T;
+    static instance<T extends StaticModel>(
+      this: Constructor<T>,
+      data?: Record<string, any> | T
+    ): T;
     static include<T extends StaticModel>(...args: any[]): T;
 
     static $find(id: number | string): any;
@@ -28,7 +31,11 @@ declare module "vue-api-query" {
     static first<T extends StaticModel>(this: T): T;
     static get(): any;
     static limit<T extends StaticModel>(this: T, value: any): T;
-    static orderBy<T extends StaticModel>(this: T, sColumn: string, sDirection?: string): T;
+    static orderBy<T extends StaticModel>(
+      this: T,
+      sColumn: string,
+      sDirection?: string
+    ): T;
     static page<T extends StaticModel>(value: any): T;
     static params<T extends Model>(this: T, payload: LooseObject): T;
     static select<T extends StaticModel>(...args: any[]): T;
@@ -59,27 +66,30 @@ declare module "vue-api-query" {
     /**
      * Query
      */
-    append<T extends Model>(this: T,...args: any[]): T;
-    custom<T extends Model>(this: T,...args: any[]): T;
-    include<T extends Model>(this: T,...args: any[]): T;
-    select<T extends Model>(this: T,...args: any[]): T;
+    append<T extends Model>(this: T, ...args: any[]): T;
+    custom<T extends Model>(this: T, ...args: any[]): T;
+    include<T extends Model>(this: T, ...args: any[]): T;
+    select<T extends Model>(this: T, ...args: any[]): T;
     orderBy<T extends Model>(this: T, sColumn: string, sDirection?: string): T;
     where<T extends Model>(this: T, field: string, value: any): T;
     whereIn<T extends Model>(this: T, field: string, array: any[]): T;
     limit<T extends Model>(this: T, value: number): T;
     page<T extends Model>(this: T, value: number): T;
     params<T extends Model>(this: T, payload: LooseObject): T;
-    for<T extends Model>(this: T,...args: any[]): T;
-    hasMany<T>(model: T): T;
+    for<T extends Model>(this: T, ...args: any[]): T;
+    hasMany<T>(model: Constructor<T>): T;
 
     // filterBy<T extends Model>(this: ThisClass<T>, filters: object): T;
 
     /**
      * Results
      */
-    $find(identifier: number | string): any;
-    $first(): any;
-    $get(): any;
+    $find<T extends Model>(
+      this: T,
+      identifier: number | string
+    ): Promise<T | undefined>;
+    $first<T extends Model>(this: T): Promise<T | undefined>;
+    $get<T extends Model>(this: T): Promise<T[] | any | undefined>;
 
     find<T extends Model>(
       this: T,
@@ -87,10 +97,10 @@ declare module "vue-api-query" {
     ): Promise<T | undefined>;
     first<T extends Model>(this: T): Promise<T | undefined>;
     get<T extends Model>(this: T): Promise<T[] | any | undefined>;
-    delete(): Promise<Result>;
+    delete<T extends Model>(this: T): Promise<Result>;
     save<T extends Model>(this: T): Promise<T | undefined | Result>;
-    attach(params: object): Promise<any>;
-    sync(params: object): Promise<any>;
+    attach<T extends Model>(this: T, params: object): Promise<Result>;
+    sync<T extends Model>(this: T, params: object): Promise<Result>;
 
     /**
      * Helpers

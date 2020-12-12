@@ -2,8 +2,11 @@ import { Model as BaseModel, Constructor, ThisClass } from "vue-api-query";
 import { AxiosRequestConfig } from "axios";
 import { VuexModule } from "vuex-module-decorators";
 import { objectToFormData } from "object-to-formdata";
-import { ApiListResponse, ApiIndexResponse } from "@bit/planetadeleste.shopaholic.types.api";
-import { Result } from '@bit/planetadeleste.shopaholic.types.base';
+import {
+  ApiListResponse,
+  ApiIndexResponse,
+} from "@bit/planetadeleste.shopaholic.types.api";
+import { Result } from "@bit/planetadeleste.shopaholic.types.base";
 import _ from "lodash";
 
 // @ts-ignore
@@ -40,14 +43,14 @@ export default class Model extends BaseModel {
 
     if (this.hasFileUpload(config.data)) {
       config.data = objectToFormData(config.data, {
-        indices: true
+        indices: true,
       });
     }
 
     if (!this.hideLoading && this.loadingModule) {
       _.invoke(this.loadingModule, "loading");
     }
-    
+
     const response = await this.$http.request(config);
 
     if (this.loadingModule) {
@@ -59,7 +62,7 @@ export default class Model extends BaseModel {
 
   /**
    * Iterates over elements of data to find instaceof File
-   * 
+   *
    * @param {Object} data
    * @returns {Boolean}
    */
@@ -75,7 +78,7 @@ export default class Model extends BaseModel {
         if (this.hasFileUpload(item)) {
           hasFile = true;
         }
-      })
+      });
     } else if (data instanceof File) {
       hasFile = true;
     }
@@ -130,7 +133,7 @@ export default class Model extends BaseModel {
     }
 
     const response = this.$find(this.getPrimaryKey());
-    if (response.id) {
+    if (response && _.has(response, "id")) {
       _.assignIn(this, response);
     }
 
@@ -145,7 +148,7 @@ export default class Model extends BaseModel {
     return this.instance().list();
   }
 
-  static instance<T extends Model>(this: ThisClass<T>, data?: object | T): T {
+  static instance<T extends Model>(this: Constructor<T>, data?: Record<string, any> | T): T {
     if (_.isUndefined(data)) {
       return new this();
     }
@@ -159,7 +162,7 @@ export default class Model extends BaseModel {
       return await super.save().then((response: Result) => {
         const model = response.data;
         this.applyMutations(model);
-        
+
         return response;
       });
     } catch (error) {
@@ -234,21 +237,24 @@ export default class Model extends BaseModel {
     return this;
   }
 
-  orderBy<T extends BaseModel>(this: T, sColumn: string, sDirection: string = 'asc'): T {
-
+  orderBy<T extends BaseModel>(
+    this: T,
+    sColumn: string,
+    sDirection: string = "asc"
+  ): T {
     const arSorts = this._builder.sorts;
     arSorts.push(JSON.stringify({ column: sColumn, direction: sDirection }));
 
     return this;
   }
 
-  toPlainObject(obj: any = this): object{
+  toPlainObject(obj: any = this): object {
     if (_.isEmpty(obj)) {
       return obj;
     }
 
     if (_.isArray(obj)) {
-      return _.map(obj, innerObj => this.toPlainObject(innerObj));
+      return _.map(obj, (innerObj) => this.toPlainObject(innerObj));
     }
 
     if (_.isPlainObject(obj)) {
@@ -256,36 +262,28 @@ export default class Model extends BaseModel {
         .pickBy((item, key) => {
           return !_.isFunction(item) && key !== "_builder";
         })
-        .mapValues(val => this.toPlainObject(val))
+        .mapValues((val) => this.toPlainObject(val))
         .value();
     }
 
     if (_.isObject(obj)) {
+      if (obj instanceof File) {
+        return obj;
+      }
+
       return this.toPlainObject(_.toPlainObject(obj));
     }
 
     return obj;
   }
-  
-  // toPlainObject() {
-  //   return _.pickBy(this, item => {
-  //     return (
-  //       !item ||
-  //       _.isString(item) ||
-  //       _.isArray(item) ||
-  //       _.isNumber(item) ||
-  //       _.isPlainObject(item)
-  //     );
-  //   });
-  // }
 
-  private applyMutations<T extends Model>(model: T): T {
+  private applyMutations<T extends Model>(this: T, model: T | Record<string, any>): T {
     if (_.isPlainObject(model)) {
       // @ts-ignore
       model = new this.constructor(model);
     }
 
-    Object.keys(model.mutations || {}).forEach(propKey => {
+    Object.keys(model.mutations || {}).forEach((propKey) => {
       if (!_.has(model, propKey)) {
         return;
       }
@@ -298,7 +296,8 @@ export default class Model extends BaseModel {
       }
 
       if (_.isArray(obModelData)) {
-        obModelData.forEach((item, i) => {
+        // @ts-ignore
+        obModelData.forEach((item: any, i: number) => {
           const modelData = _.get(obModelData, i);
           if (!_.isUndefined(modelData)) {
             _.set(model, `${propKey}[${i}]`, new ModelForKey(modelData));
@@ -312,6 +311,7 @@ export default class Model extends BaseModel {
       }
     });
 
+    // @ts-ignore
     return model;
   }
 
@@ -319,7 +319,7 @@ export default class Model extends BaseModel {
     if (this.loadingModule) {
       _.invoke(this.loadingModule, "loaded");
     }
-    
+
     let message = this.syncErrors(error);
 
     if (!message || _.isEmpty(message) || !this.flashModule) {

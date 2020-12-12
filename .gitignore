@@ -22,3 +22,4 @@ pnpm-debug.log*
 *.sw?
 /.bitmap
 /bit-add.sh
+/yarn.lock

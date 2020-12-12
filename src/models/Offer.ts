@@ -21,4 +21,8 @@ export default class Offer extends BaseApiModel {
   preview_image!: string;
   images!: OCFileData[];
   property!: any[];
+
+  // TicketShopaholic plugin
+  start_publish_at!: string;
+  end_publish_at!: string;
 }

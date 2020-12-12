@@ -1,5 +1,5 @@
 import BaseApiModel from "@bit/planetadeleste.shopaholic.models.base-api-model";
-import State from '@bit/planetadeleste.shopaholic.models.state';
+import State from "@bit/planetadeleste.shopaholic.models.state";
 
 export default class Country extends BaseApiModel {
   id!: number;
@@ -13,5 +13,4 @@ export default class Country extends BaseApiModel {
   resource() {
     return "countries";
   }
-
 }

@@ -1,11 +1,17 @@
 import { AxiosRequestConfig } from "axios";
-import { UserModel } from "@bit/planetadeleste.shopaholic.types.user";
+
+export interface ApiResponse<T = Record<string, any>> {
+  data: T;
+  code: string | null;
+  message: string | null;
+  status: boolean;
+}
 
 /**
  * API response
  */
 export interface ApiListResponse {
-  data: any[] | any;
+  data: Record<string, any> | any[];
 }
 
 export interface ApiLinksResponse {
@@ -44,5 +50,5 @@ export interface ResponseError {
 export interface ResponseLogin {
   expires_in: number;
   token: string;
-  user?: UserModel;
+  user?: Record<string, any>;
 }

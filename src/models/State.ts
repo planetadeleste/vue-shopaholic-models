@@ -1,6 +1,6 @@
 import BaseApiModel from "@bit/planetadeleste.shopaholic.models.base-api-model";
 import Country from "@bit/planetadeleste.shopaholic.models.country";
-import Town from '@bit/planetadeleste.shopaholic.models.town';
+import Town from "@bit/planetadeleste.shopaholic.models.town";
 
 export default class State extends BaseApiModel {
   id!: number;
@@ -15,7 +15,7 @@ export default class State extends BaseApiModel {
 
   get mutations() {
     return {
-      country: Country,
+      country: Country
     };
   }
 

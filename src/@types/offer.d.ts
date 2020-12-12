@@ -12,6 +12,10 @@ export interface OfferItem extends ElementItem {
   updated_at: string;
   thumbnail: string;
   code: string;
+
+  // TicketShopaholic plugin
+  start_publish_at?: string;
+  end_publish_at?: string;
 }
 
 export interface OfferModel extends OfferItem {

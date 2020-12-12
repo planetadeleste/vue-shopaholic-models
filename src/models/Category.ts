@@ -3,21 +3,21 @@ import { CategoryListItem } from "@bit/planetadeleste.shopaholic.types.category"
 import { OCFileData } from "@bit/planetadeleste.shopaholic.types.base";
 
 export default class Category extends BaseApiModel {
-  id?: number;
-  name?: string;
-  code?: string;
-  slug?: string;
-  preview_image?: string;
-  images?: OCFileData[];
-  text?: string;
-  preview_text?: string;
-  value?: number;
-  created_at?: string;
-  updated_at?: string;
-  description?: string;
-  active?: boolean;
-  external_id?: string;
-  children?: CategoryListItem[];
+  id!: number;
+  name!: string;
+  code!: string;
+  slug!: string;
+  preview_image!: string;
+  images!: OCFileData[];
+  text!: string;
+  preview_text!: string;
+  value!: number;
+  created_at!: string;
+  updated_at!: string;
+  description!: string;
+  active!: boolean;
+  external_id!: string;
+  children!: CategoryListItem[];
 
   resource() {
     return "categories";

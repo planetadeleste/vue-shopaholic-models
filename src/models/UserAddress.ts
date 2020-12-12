@@ -7,22 +7,22 @@ import _ from "lodash";
 
 export default class UserAddress extends BaseApiModel {
   [x: string]: any;
-  id?: number;
-  user_id?: number;
-  type?: UserAddressType;
-  country?: string;
-  state?: string;
-  city?: string;
-  city_id?: number;
-  street?: string;
-  street_id?: number;
-  house?: string;
-  building?: string;
-  flat?: string;
-  floor?: string;
-  address1?: string;
-  address2?: string;
-  postcode?: string;
+  id!: number;
+  user_id!: number;
+  type!: UserAddressType;
+  country!: string;
+  state!: string;
+  city!: string;
+  city_id!: number;
+  street!: string;
+  street_id!: number;
+  house!: string;
+  building!: string;
+  flat!: string;
+  floor!: string;
+  address1!: string;
+  address2!: string;
+  postcode!: string;
 
   resource() {
     return "profile/address";

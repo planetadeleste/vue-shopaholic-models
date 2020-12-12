@@ -3,9 +3,13 @@
 import BaseApiModel from "@bit/planetadeleste.shopaholic.models.base-api-model";
 import Vue from "vue";
 import UserAddress from "@bit/planetadeleste.shopaholic.models.user-address";
-import { UserRegisterOptions, VendorData, UserModel } from "@bit/planetadeleste.shopaholic.types.user";
+import {
+  UserRegisterOptions,
+  VendorData,
+  UserModel
+} from "@bit/planetadeleste.shopaholic.types.user";
 import _ from "lodash";
-import { Result } from '@bit/planetadeleste.shopaholic.types.base';
+import { Result } from "@bit/planetadeleste.shopaholic.types.base";
 
 export default class User extends BaseApiModel implements UserModel {
   groups!: string[];
@@ -82,9 +86,8 @@ export default class User extends BaseApiModel implements UserModel {
           _.assignIn(this, response.data.user);
         }
       }
-      
-      return response;
 
+      return response;
     } catch (error) {
       return _.get(error, "response.data", error);
     }
